@@ -1,0 +1,6 @@
+{
+  "name": "speakerb2b-draft",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node scripts/build-site.mjs", "test": "node --test scripts/site.test.mjs", "preview": "python3 -m http.server 8080 --directory dist --bind 0.0.0.0" }
+}
