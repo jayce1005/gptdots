@@ -29,7 +29,7 @@ test('S19 is the only public identity for the confirmed shared model',async()=>{
 
 test('GB01 image-derived claims keep conditions and stay model-specific',async()=>{
  const gb=products.find(p=>p.id==='gb01');
- assert.equal(gb.image.src,'/images/gb01/gb01-main.png');assert.deepEqual(gb.gallery,[]);
+ assert.equal(gb.image.src,'/images/gb01/gb01-main.png');assert.equal(gb.gallery.length,8);
  const html=await readFile(new URL('products/gb01/index.html',root),'utf8');
  for(const text of ['10W','IPX6','Not for immersion','30% volume with lights off','two compatible speakers','FAT32','MP3 only, not WAV or FLAC','5V 1A/2A','remain unconfirmed']) assert.ok(html.includes(text),text);
  for(const p of products.filter(p=>!['gb01','gb03','mg-ii'].includes(p.id))) assert.equal(p.specifications,undefined);
@@ -48,7 +48,7 @@ test('GB01 uses confirmed Bluetooth and unit price without inferred sales terms'
 });
 
 test('GB03 retains sourced limitations without copying GB01 specifications',async()=>{
- const gb=products.find(p=>p.id==='gb03');assert.equal(gb.image.src,'/images/gb03/gb03-main.png');assert.equal(gb.image.width,1200);assert.equal(gb.image.height,1200);assert.deepEqual(gb.gallery,[]);
+ const gb=products.find(p=>p.id==='gb03');assert.equal(gb.image.src,'/images/gb03/gb03-main.png');assert.equal(gb.image.width,1200);assert.equal(gb.image.height,1200);assert.equal(gb.gallery.length,8);
  const html=await readFile(new URL('products/gb03/index.html',root),'utf8');
  for(const text of ['USD 13.20 / unit','30W','RMS or peak rating is not specified','DSP','BASS+3.0','IPX7','two compatible speakers','Bluetooth 6.0','Up to 24 hours at 30% volume','Actual playback varies with volume and use','Black.','Carrying strap.']) assert.ok(html.includes(text),text);
  assert.doesNotMatch(html,/60W|lights off|lights on|audio source|test conditions remain unconfirmed|Bluetooth version, frequency|FAT32|5V 1A|EXW|FOB|from USD|starting at/i);
@@ -60,7 +60,7 @@ test('MG II preserves image conditions and separate water-use instructions',asyn
  const html=await readFile(new URL('products/mg-ii/index.html',root),'utf8');
  for(const value of ['USD 21.60 / unit','24W rated output','Bluetooth 6.0','Single Full-Range Driver','Movie, Music and Party','17+ hours','30% volume with lights off','two MG II speakers','Cream product image labels the two-speaker setup as 48W','not a professional rescue device','IP67 as stated','not for immersion in water','Do not immerse']) assert.ok(html.includes(value),value);
  assert.doesNotMatch(html,/dual.driver|driver count.*(?:awaiting|unconfirmed)|EXW|FOB|starting at/i);
- assert.equal(products.find(p=>p.id==='mg-ii').gallery.length,2);
+ assert.equal(products.find(p=>p.id==='mg-ii').gallery.length,16);
 });
 
 test('MG II colours remain within one product at the existing unit price',async()=>{
@@ -72,11 +72,21 @@ test('MG II colours remain within one product at the existing unit price',async(
  for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))) assert.doesNotMatch(await readFile(f,'utf8'),/Black Copper/i);
 });
 
-test('Three photographed products map four images to the correct models and colours',async()=>{
+test('Three photographed products map 32 images to the correct models and colours',async()=>{
  const photographed=products.filter(p=>p.image);assert.deepEqual(photographed.map(p=>p.id).sort(),['gb01','gb03','mg-ii']);
  assert.equal(products.filter(p=>!p.image).length,5);
  const mg=products.find(p=>p.id==='mg-ii');
- assert.deepEqual(mg.gallery.map(i=>i.caption),['Black & Brass','Cream']);
+ assert.equal(mg.gallery.filter(i=>i.colour==='Cream').length,9);assert.equal(mg.gallery.filter(i=>i.colour==='Black & Brass').length,7);assert.equal(photographed.reduce((sum,p)=>sum+p.gallery.length,0),32);
  for(const p of photographed){const html=await readFile(new URL(`products/${p.id}/index.html`,root),'utf8');for(const i of p.gallery?.length?p.gallery:[p.image]) {assert.ok(html.includes(i.src));assert.ok(html.includes(`width="${i.width}" height="${i.height}"`));}}
  const css=await readFile(new URL('styles.css',root),'utf8');assert.match(css,/object-fit:contain/);
+});
+
+test('Gallery links open originals and only the first image loads eagerly',async()=>{
+ for(const id of ['gb01','gb03','mg-ii']){
+  const html=await readFile(new URL(`products/${id}/index.html`,root),'utf8');
+  const p=products.find(p=>p.id===id);
+  assert.equal([...html.matchAll(/class="gallery-image-link"/g)].length,p.gallery.length);
+  assert.equal([...html.matchAll(/loading="eager"/g)].length,1);
+  assert.equal([...html.matchAll(/loading="lazy"/g)].length,p.gallery.length-1);
+ }
 });

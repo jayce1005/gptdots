@@ -23,8 +23,11 @@ const productImage = (p, large=false) => {
 const productGallery = p => {
   const photos = p.gallery || [];
   if (!photos.length) return productImage(p,true);
-  return `<div class="product-gallery" aria-label="${esc(p.name)} product images">${photos.map((photo,index)=>`<figure>${productImage({...p,image:photo},index===0)}<figcaption>${esc(photo.caption || `${p.name} — view ${index+1}`)}</figcaption></figure>`).join('')}</div>`;
+  const groups = [...new Set(photos.map(photo => photo.colour || 'Product gallery'))];
+  const groupId = index => `${p.id}-gallery-${index+1}`;
+  return `<div class="product-gallery" aria-label="${esc(p.name)} product images">${groups.length>1?`<nav class="category-tabs" aria-label="Choose product colour">${groups.map((group,index)=>`<a href="#${groupId(index)}">${esc(group)}</a>`).join('')}</nav>`:''}${groups.map((group,index)=>`<section id="${groupId(index)}" class="gallery-group" aria-label="${esc(group)}"><h2 class="gallery-heading">${esc(group)}</h2><p class="note">Select an image to view it at full size.</p>${photos.filter(photo=>(photo.colour || 'Product gallery')===group).map(photo=>`<figure><a class="gallery-image-link" href="${esc(photo.src)}" aria-label="View full-size image: ${esc(photo.alt)}">${productImage({...p,image:photo},photo===photos[0])}</a><figcaption>${esc(photo.caption || photo.alt)}</figcaption></figure>`).join('')}</section>`).join('')}</div>`;
 };
+
 const card = p => `<article class="product-card">${productImage(p)}<div class="card-body"><span class="eyebrow">SPEAKER SHORTLIST</span><h3><a href="/products/${p.id}/">${esc(p.name)} <span aria-hidden="true">→</span></a></h3><p>${esc(p.status)}</p><a class="text-link" href="/inquiry/?product=${p.id}">Add to an enquiry <span aria-hidden="true">→</span></a></div></article>`;
 const navigation = (current, className) => `<nav class="${className}" aria-label="Main navigation">${[['Home','/','home'],['Products','/products/','products'],['OEM/ODM','/services/oem-odm/','services'],['About Us','/about/','about'],['Contact','/contact/','contact']].map(([name,href,key])=>`<a ${current===key?'aria-current="page"':''} href="${href}">${name}</a>`).join('')}</nav>`;
 const categoryCards = categories.map((c,i)=>`<a class="category-card" href="/products/type/${c.id}/"><span class="eyebrow">0${i+1} / BROWSE BY STYLE</span><h3>${c.name} <span aria-hidden="true">→</span></h3><p>${c.description}</p></a>`).join('');
