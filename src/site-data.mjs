@@ -290,7 +290,7 @@ gb01.gallery.unshift(gb01.image);
 
 const s12 = products.find(product => product.id === "s12");
 s12.detailTitle = "S12 Bluetooth 5.4 12W Speaker";
-s12.description = "S12 combines Bluetooth 5.4, 12W output, RGB lighting and TWS pairing in a compact black speaker. Wholesale Price: USD 7.00 / unit.";
+s12.description = "S12 combines Bluetooth 5.4, 12W output, RGB lighting and TWS pairing in a compact black speaker. Up to 12 hours at 30% volume with the lights off; actual playback varies with use. Wholesale Price: USD 7.00 / unit.";
 s12.wholesalePrice = "USD 7.00 / unit";
 s12.specifications = [
  ['Power', '12W, confirmed by the seller. RMS or peak rating is not specified.'],
@@ -299,13 +299,13 @@ s12.specifications = [
  ['Stereo pairing', 'TWS pairing with two compatible speakers.'],
  ['Lighting', 'RGB lighting with multiple light effects.'],
  ['Playback sources', 'Bluetooth and TF card playback; TF cards up to 32GB.'],
- ['Playback time', 'Up to 12 hours as advertised in the supplied images. Test volume and lighting conditions remain unconfirmed. Actual playback varies with volume and use.'],
+ ['Playback time', 'Up to 12 hours at 30% volume with the lights off. Actual playback varies with volume and use.'],
  ['Charging', 'Charging time: 3–4 hours. DC 5V input.'],
  ['Dimensions', 'Height: 11.3cm; width: 8cm. The third dimension is not specified.'],
  ['Weight', '380g.'],
  ['Colour', 'Black.']
 ];
-s12.specificationNote = "Power and wholesale price were confirmed by the seller; other listed details come from the supplied product images. Battery capacity, charging current, connector type and driver count remain unconfirmed.";
+s12.specificationNote = "Power, wholesale price and playback test conditions were confirmed by the seller; other listed details come from the supplied product images. Battery capacity, charging current, connector type and driver count remain unconfirmed.";
 
 s12.gallery = [
   {
@@ -319,8 +319,8 @@ s12.gallery = [
     "src": "/images/s12/s12-size-battery.jpg",
     "width": 1500,
     "height": 1500,
-    "alt": "Dimensions and advertised playback time; test conditions pending",
-    "caption": "Dimensions and advertised playback time; test conditions pending"
+    "alt": "Dimensions and playback time: up to 12 hours at 30% volume with the lights off",
+    "caption": "Dimensions and playback time: up to 12 hours at 30% volume with the lights off"
   },
   {
     "src": "/images/s12/s12-ipx7-water-resistance.jpg",

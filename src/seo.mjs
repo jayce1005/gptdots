@@ -18,7 +18,7 @@ const routes = {
 export function metadata(path) {
   const product = products.find(p => path === `/products/${p.id}/`);
   const category = categories.find(c => path === `/products/type/${c.id}/`);
-  if (product?.id === 's12') return {title: `S12 Bluetooth 5.4 12W Speaker — Wholesale | ${site.name}`, description: 'Explore the S12 Bluetooth 5.4 speaker with 12W output, RGB lighting, TWS pairing and TF card playback. Wholesale Price: USD 7.00 / unit.', label: product.name};
+  if (product?.id === 's12') return {title: `S12 Bluetooth 5.4 12W Speaker — Wholesale | ${site.name}`, description: 'S12 Bluetooth 5.4 12W speaker. Up to 12 hours at 30% volume with the lights off; actual playback varies with use. Wholesale Price: USD 7.00 / unit.', label: product.name};
   if (product?.id === 'mg-ii') return {title: `MG II Bluetooth 6.0 24W Speaker — Wholesale | ${site.name}`, description: 'Explore MG II with Bluetooth 6.0, a Single Full-Range Driver, 24W rated output, DSP and three EQ modes. Wholesale Price: USD 21.60 / unit.', label: product.name};
   if (product?.id === 'gb03') return {title: `GB03 Bluetooth 6.0 Speaker — Wholesale | ${site.name}`, description: 'GB03 Bluetooth 6.0 speaker with DSP and BASS+3.0. Up to 24 hours at 30% volume; actual playback varies with use. Wholesale Price: USD 13.20 / unit.', label: product.name};
   if (product?.id === 'gb01') return {title: `GB01 Bluetooth 6.0 Speaker — Wholesale | ${site.name}`, description: 'Explore the GB01 Bluetooth 6.0 speaker with a 10W full-range driver, DSP and three lighting modes. Wholesale Price: USD 7.80 / unit.', label: product.name};

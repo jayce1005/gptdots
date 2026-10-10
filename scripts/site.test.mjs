@@ -98,8 +98,8 @@ test('S12 uses only the newly confirmed power and unit price',async()=>{
  assert.equal(products.find(p=>p.id==='s12').image.src,'/images/s12/s12-main.jpg');assert.equal(products.find(p=>p.id==='s12').gallery.length,6);
 });
 
-test('S12 image facts retain their scope and unknown playback conditions',async()=>{
+test('S12 facts include user-confirmed playback conditions',async()=>{
  const html=await readFile(new URL('products/s12/index.html',root),'utf8');
- for(const text of ['Bluetooth 5.4','IPX7','two compatible speakers','RGB','32GB','Up to 12 hours','Test volume and lighting conditions remain unconfirmed','3–4 hours','DC 5V','11.3cm','8cm','380g']) assert.ok(html.includes(text),text);
- assert.doesNotMatch(html,/Bluetooth 6\.0|30% volume|lights off|Type-C|FAT32|MP3 only|mAh|5V 1A|5V 2A/i);
+ for(const text of ['Bluetooth 5.4','IPX7','two compatible speakers','RGB','32GB','Up to 12 hours','Up to 12 hours at 30% volume with the lights off','3–4 hours','DC 5V','11.3cm','8cm','380g']) assert.ok(html.includes(text),text);
+ assert.doesNotMatch(html,/Bluetooth 6\.0|test conditions pending|conditions remain unconfirmed|Type-C|FAT32|MP3 only|mAh|5V 1A|5V 2A/i);
 });
