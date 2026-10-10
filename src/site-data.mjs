@@ -283,3 +283,7 @@ gb03.gallery = [gb03.image, ...[
     "height": 1254
   }
 ]];
+
+// White-background primary image; retain the courtyard image in the gallery.
+gb01.image = {src:"/images/gb01/gb01-white-main.jpg",alt:"GB01 black-and-gold speaker with carrying strap on a white background",width:1500,height:1500,caption:"GB01 — white-background product view"};
+gb01.gallery.unshift(gb01.image);

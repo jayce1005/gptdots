@@ -29,7 +29,7 @@ test('S19 is the only public identity for the confirmed shared model',async()=>{
 
 test('GB01 image-derived claims keep conditions and stay model-specific',async()=>{
  const gb=products.find(p=>p.id==='gb01');
- assert.equal(gb.image.src,'/images/gb01/gb01-main.png');assert.equal(gb.gallery.length,8);
+ assert.equal(gb.image.src,'/images/gb01/gb01-white-main.jpg');assert.equal(gb.gallery.length,9);assert.equal(gb.gallery[0],gb.image);assert.equal(gb.gallery[1].src,'/images/gb01/gb01-main.png');
  const html=await readFile(new URL('products/gb01/index.html',root),'utf8');
  for(const text of ['10W','IPX6','Not for immersion','30% volume with lights off','two compatible speakers','FAT32','MP3 only, not WAV or FLAC','5V 1A/2A','remain unconfirmed']) assert.ok(html.includes(text),text);
  for(const p of products.filter(p=>!['gb01','gb03','mg-ii'].includes(p.id))) assert.equal(p.specifications,undefined);
@@ -72,11 +72,11 @@ test('MG II colours remain within one product at the existing unit price',async(
  for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))) assert.doesNotMatch(await readFile(f,'utf8'),/Black Copper/i);
 });
 
-test('Three photographed products map 32 images to the correct models and colours',async()=>{
+test('Three photographed products map 33 images to the correct models and colours',async()=>{
  const photographed=products.filter(p=>p.image);assert.deepEqual(photographed.map(p=>p.id).sort(),['gb01','gb03','mg-ii']);
  assert.equal(products.filter(p=>!p.image).length,5);
  const mg=products.find(p=>p.id==='mg-ii');
- assert.equal(mg.gallery.filter(i=>i.colour==='Cream').length,9);assert.equal(mg.gallery.filter(i=>i.colour==='Black & Brass').length,7);assert.equal(photographed.reduce((sum,p)=>sum+p.gallery.length,0),32);
+ assert.equal(mg.gallery.filter(i=>i.colour==='Cream').length,9);assert.equal(mg.gallery.filter(i=>i.colour==='Black & Brass').length,7);assert.equal(photographed.reduce((sum,p)=>sum+p.gallery.length,0),33);
  for(const p of photographed){const html=await readFile(new URL(`products/${p.id}/index.html`,root),'utf8');for(const i of p.gallery?.length?p.gallery:[p.image]) {assert.ok(html.includes(i.src));assert.ok(html.includes(`width="${i.width}" height="${i.height}"`));}}
  const css=await readFile(new URL('styles.css',root),'utf8');assert.match(css,/object-fit:contain/);
 });
