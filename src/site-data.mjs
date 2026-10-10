@@ -287,3 +287,68 @@ gb03.gallery = [gb03.image, ...[
 // White-background primary image; retain the courtyard image in the gallery.
 gb01.image = {src:"/images/gb01/gb01-white-main.jpg",alt:"GB01 black-and-gold speaker with carrying strap on a white background",width:1500,height:1500,caption:"GB01 — white-background product view"};
 gb01.gallery.unshift(gb01.image);
+
+const s12 = products.find(product => product.id === "s12");
+s12.detailTitle = "S12 Bluetooth 5.4 12W Speaker";
+s12.description = "S12 combines Bluetooth 5.4, 12W output, RGB lighting and TWS pairing in a compact black speaker. Wholesale Price: USD 7.00 / unit.";
+s12.wholesalePrice = "USD 7.00 / unit";
+s12.specifications = [
+ ['Power', '12W, confirmed by the seller. RMS or peak rating is not specified.'],
+ ['Bluetooth version', 'Bluetooth 5.4.'],
+ ['Water protection', 'IPX7 as stated in the supplied product images. Avoid submerging the speaker or soaking it for an extended period.'],
+ ['Stereo pairing', 'TWS pairing with two compatible speakers.'],
+ ['Lighting', 'RGB lighting with multiple light effects.'],
+ ['Playback sources', 'Bluetooth and TF card playback; TF cards up to 32GB.'],
+ ['Playback time', 'Up to 12 hours as advertised in the supplied images. Test volume and lighting conditions remain unconfirmed. Actual playback varies with volume and use.'],
+ ['Charging', 'Charging time: 3–4 hours. DC 5V input.'],
+ ['Dimensions', 'Height: 11.3cm; width: 8cm. The third dimension is not specified.'],
+ ['Weight', '380g.'],
+ ['Colour', 'Black.']
+];
+s12.specificationNote = "Power and wholesale price were confirmed by the seller; other listed details come from the supplied product images. Battery capacity, charging current, connector type and driver count remain unconfirmed.";
+
+s12.gallery = [
+  {
+    "src": "/images/s12/s12-main.jpg",
+    "width": 1497,
+    "height": 1500,
+    "alt": "S12 black speaker on a white background with water splash",
+    "caption": "S12 black speaker on a white background with water splash"
+  },
+  {
+    "src": "/images/s12/s12-size-battery.jpg",
+    "width": 1500,
+    "height": 1500,
+    "alt": "Dimensions and advertised playback time; test conditions pending",
+    "caption": "Dimensions and advertised playback time; test conditions pending"
+  },
+  {
+    "src": "/images/s12/s12-ipx7-water-resistance.jpg",
+    "width": 1254,
+    "height": 1254,
+    "alt": "IPX7; avoid submersion and prolonged soaking",
+    "caption": "IPX7; avoid submersion and prolonged soaking"
+  },
+  {
+    "src": "/images/s12/s12-rgb-lighting.jpg",
+    "width": 1500,
+    "height": 1500,
+    "alt": "RGB lighting effects",
+    "caption": "RGB lighting effects"
+  },
+  {
+    "src": "/images/s12/s12-bluetooth-tf-connectivity.jpg",
+    "width": 1254,
+    "height": 1211,
+    "alt": "Bluetooth and TF card playback",
+    "caption": "Bluetooth and TF card playback"
+  },
+  {
+    "src": "/images/s12/s12-tws-bluetooth-5-4.jpg",
+    "width": 1500,
+    "height": 1500,
+    "alt": "TWS pairing and Bluetooth 5.4",
+    "caption": "TWS pairing and Bluetooth 5.4"
+  }
+];
+s12.image = s12.gallery[0];

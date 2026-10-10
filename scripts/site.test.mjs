@@ -8,7 +8,7 @@ const root = new URL('../dist/', import.meta.url);
 async function files(dir) { let result=[]; for(const e of await readdir(dir,{withFileTypes:true})) { const path=new URL(e.name+(e.isDirectory()?'/':''),dir); result.push(...(e.isDirectory()?await files(path):[path])); } return result; }
 test('All candidate identities remain distinct and excluded model is absent',()=>{assert.equal(products.length,8); assert.equal(new Set(products.map(p=>p.id)).size,8); for(const id of ['s12','s11','s19','s16','s20','gb01','gb03','mg-ii']) assert.ok(products.some(p=>p.id===id)); for (const id of ['tt-sk027','x2pro','a8-pro','s12-2','s11-1','digital-display-rgb']) assert.ok(!products.some(p=>p.id===id));});
 test('Every internal page and asset link resolves in the build',async()=>{for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))){if(!f.pathname.endsWith('.html'))continue;const html=await readFile(f,'utf8');for(const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)){const url=new URL(match[1],'https://local.test');assert.equal(url.origin,'https://local.test');const path=decodeURIComponent(url.pathname);await stat(new URL('.'+path+(path.endsWith('/')?'index.html':''),root));}assert.match(html, /name="viewport"/);assert.match(html,/noindex,nofollow/);assert.match(html, /lang="en"/);}});
-test('Draft contains no old-site content, claims or hidden verification metadata',async()=>{for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))){const s=await readFile(f,'utf8');assert.doesNotMatch(s,/Manike|TaoTronics|MIEVHub|productLink|20W|15W|12W|free shipping|in stock|guaranteed|google-analytics|gtag\(/i);}await assert.rejects(stat(new URL('verification.json',root)));});
+test('Draft contains no old-site content, claims or hidden verification metadata',async()=>{for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))){const s=await readFile(f,'utf8');assert.doesNotMatch(s,/Manike|TaoTronics|MIEVHub|productLink|20W|15W|free shipping|in stock|guaranteed|google-analytics|gtag\(/i);}await assert.rejects(stat(new URL('verification.json',root)));});
 test('Enquiry creates a local brief with one consistent productUrl field',async()=>{const js=await readFile(new URL('inquiry.js',root),'utf8');const html=await readFile(new URL('inquiry/index.html',root),'utf8');assert.match(js,/preventDefault/);assert.match(html,/name="productUrl"/);assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|sendBeacon|localStorage/);assert.doesNotMatch(html,/<form[^>]+action=/);assert.match(js,/Nothing has been sent/);});
 test('All pages have unique SEO metadata, one H1, and descriptive breadcrumbs',async()=>{const titles=new Set(),descriptions=new Set();let pages=0;for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))){if(!f.pathname.endsWith('.html'))continue;const html=await readFile(f,'utf8');const title=html.match(/<title>(.*?)<\/title>/)[1];const description=html.match(/name="description" content="([^"]+)"/)[1];assert.ok(!titles.has(title),title);assert.ok(!descriptions.has(description),description);titles.add(title);descriptions.add(description);assert.equal([...html.matchAll(/<h1[ >]/g)].length,1);assert.ok(description.length>60&&description.length<220);assert.doesNotMatch(html,/<link rel="canonical"/);if(f.pathname!==new URL('index.html',root).pathname)assert.match(html,/aria-label="Breadcrumb"/);pages++;}assert.equal(pages,20);});
 test('Sitemap lists real canonical routes and draft robots block indexing',async()=>{const sitemap=await readFile(new URL('sitemap.xml',root),'utf8');const routes=[...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(x=>x[1]);assert.equal(routes.length,18);assert.equal(new Set(routes).size,routes.length);for(const route of routes){assert.ok(route.startsWith(origin+'/'));const path=new URL(route).pathname;await stat(new URL('.'+path+'index.html',root));}assert.match(await readFile(new URL('robots.txt',root),'utf8'),/Disallow: \/\n/);assert.match(await readFile(new URL('_headers',root),'utf8'),/X-Robots-Tag: noindex/);});
@@ -32,7 +32,7 @@ test('GB01 image-derived claims keep conditions and stay model-specific',async()
  assert.equal(gb.image.src,'/images/gb01/gb01-white-main.jpg');assert.equal(gb.gallery.length,9);assert.equal(gb.gallery[0],gb.image);assert.equal(gb.gallery[1].src,'/images/gb01/gb01-main.png');
  const html=await readFile(new URL('products/gb01/index.html',root),'utf8');
  for(const text of ['10W','IPX6','Not for immersion','30% volume with lights off','two compatible speakers','FAT32','MP3 only, not WAV or FLAC','5V 1A/2A','remain unconfirmed']) assert.ok(html.includes(text),text);
- for(const p of products.filter(p=>!['gb01','gb03','mg-ii'].includes(p.id))) assert.equal(p.specifications,undefined);
+ for(const p of products.filter(p=>!['gb01','gb03','mg-ii','s12'].includes(p.id))) assert.equal(p.specifications,undefined);
  assert.doesNotMatch(html,/GB MINI/);
 });
 
@@ -44,7 +44,7 @@ test('GB01 uses confirmed Bluetooth and unit price without inferred sales terms'
  assert.doesNotMatch(html,/Bluetooth version, dimensions|EXW|FOB|starting at|from USD|tiered pricing/i);
  assert.match(html,/Order quantity<\/dt><dd>To be confirmed/);
  assert.match(html,/Supplier-provided product image/);
- for (const p of products.filter(p=>!['gb01','gb03','mg-ii'].includes(p.id))) assert.equal(p.wholesalePrice,undefined);
+ for (const p of products.filter(p=>!['gb01','gb03','mg-ii','s12'].includes(p.id))) assert.equal(p.wholesalePrice,undefined);
 });
 
 test('GB03 retains sourced limitations without copying GB01 specifications',async()=>{
@@ -72,21 +72,34 @@ test('MG II colours remain within one product at the existing unit price',async(
  for(const f of (await files(root)).filter(f=>! /\.(png|jpe?g|webp|avif)$/i.test(f.pathname))) assert.doesNotMatch(await readFile(f,'utf8'),/Black Copper/i);
 });
 
-test('Three photographed products map 33 images to the correct models and colours',async()=>{
- const photographed=products.filter(p=>p.image);assert.deepEqual(photographed.map(p=>p.id).sort(),['gb01','gb03','mg-ii']);
- assert.equal(products.filter(p=>!p.image).length,5);
+test('Four photographed products map 39 images to the correct models and colours',async()=>{
+ const photographed=products.filter(p=>p.image);assert.deepEqual(photographed.map(p=>p.id).sort(),['gb01','gb03','mg-ii','s12']);
+ assert.equal(products.filter(p=>!p.image).length,4);
  const mg=products.find(p=>p.id==='mg-ii');
- assert.equal(mg.gallery.filter(i=>i.colour==='Cream').length,9);assert.equal(mg.gallery.filter(i=>i.colour==='Black & Brass').length,7);assert.equal(photographed.reduce((sum,p)=>sum+p.gallery.length,0),33);
+ assert.equal(mg.gallery.filter(i=>i.colour==='Cream').length,9);assert.equal(mg.gallery.filter(i=>i.colour==='Black & Brass').length,7);assert.equal(photographed.reduce((sum,p)=>sum+p.gallery.length,0),39);
  for(const p of photographed){const html=await readFile(new URL(`products/${p.id}/index.html`,root),'utf8');for(const i of p.gallery?.length?p.gallery:[p.image]) {assert.ok(html.includes(i.src));assert.ok(html.includes(`width="${i.width}" height="${i.height}"`));}}
  const css=await readFile(new URL('styles.css',root),'utf8');assert.match(css,/object-fit:contain/);
 });
 
 test('Gallery links open originals and only the first image loads eagerly',async()=>{
- for(const id of ['gb01','gb03','mg-ii']){
+ for(const id of ['gb01','gb03','mg-ii','s12']){
   const html=await readFile(new URL(`products/${id}/index.html`,root),'utf8');
   const p=products.find(p=>p.id===id);
   assert.equal([...html.matchAll(/class="gallery-image-link"/g)].length,p.gallery.length);
   assert.equal([...html.matchAll(/loading="eager"/g)].length,1);
   assert.equal([...html.matchAll(/loading="lazy"/g)].length,p.gallery.length-1);
  }
+});
+
+test('S12 uses only the newly confirmed power and unit price',async()=>{
+ const html=await readFile(new URL('products/s12/index.html',root),'utf8');
+ assert.match(html,/<h1>S12 Bluetooth 5.4 12W Speaker<\/h1>/);
+ assert.match(html,/USD 7.00 \/ unit/);assert.doesNotMatch(html,/15W/);
+ assert.equal(products.find(p=>p.id==='s12').image.src,'/images/s12/s12-main.jpg');assert.equal(products.find(p=>p.id==='s12').gallery.length,6);
+});
+
+test('S12 image facts retain their scope and unknown playback conditions',async()=>{
+ const html=await readFile(new URL('products/s12/index.html',root),'utf8');
+ for(const text of ['Bluetooth 5.4','IPX7','two compatible speakers','RGB','32GB','Up to 12 hours','Test volume and lighting conditions remain unconfirmed','3–4 hours','DC 5V','11.3cm','8cm','380g']) assert.ok(html.includes(text),text);
+ assert.doesNotMatch(html,/Bluetooth 6\.0|30% volume|lights off|Type-C|FAT32|MP3 only|mAh|5V 1A|5V 2A/i);
 });
