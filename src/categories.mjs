@@ -1,7 +1,21 @@
-// Browsing groups based on the business scope and parent-reviewed exterior descriptions.
-// These labels do not establish technical features, portability specifications or ratings.
+// Browsing groups follow the supplier's product recommendations; a model can belong to more than one group.
 export const categories = [
-  { id:'portable-bluetooth', name:'Portable Bluetooth', description:'Explore the speaker model shortlist. Dimensions, battery and connection specifications are awaiting verification.', models:['mg-ii','gb03','gb01','s12','s16','s20','s19','s11'] },
-  { id:'rgb-lighting', name:'RGB lighting', description:'Explore the S19 candidate with its referenced rectangular RGB-style light frame. Lighting modes and technical details still need confirmation.', models:['s19'] },
-  { id:'retro-style', name:'Retro style', description:'Explore the textured, classic-looking GB03 candidate. Materials and finish options are not yet confirmed.', models:['gb03'] }
+  {
+    id: 'silicone-speakers',
+    name: 'Silicone Speakers',
+    description: 'Explore our silicone speaker collection, from compact designs to larger retro styles.',
+    models: ['gbmini','gb02','gb03','gb05','gb06','gb07','music-gold','music-box','music-elf','cw','sp','de','mt','mt-mini','gb01','gb10','gb01-a']
+  },
+  {
+    id: 'portable-bluetooth',
+    name: 'Portable Speakers',
+    description: 'Explore speakers selected for everyday carrying, travel and outdoor listening.',
+    models: ['mg-ii','gb03','gb01','s12','s16','s20','s19','s11','gbmini','gb02','cw','x12','x16','s21','cm08','gb09','g21']
+  },
+  {
+    id: 'computer-speakers',
+    name: 'Computer Speakers',
+    description: 'Explore speakers recommended in the supplier catalog for computer and desktop setups. Check connection compatibility before ordering.',
+    models: ['so3','s107','so5','so5-pro','cm01']
+  }
 ];

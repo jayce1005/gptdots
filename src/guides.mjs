@@ -1,5 +1,5 @@
 export const services = [
-  { title: 'Wholesale & stock enquiries', href: '/services/wholesale/', text: 'Start with a model from the shortlist. Ask for current availability, specifications and order requirements before making a purchase decision.' },
-  { title: 'OEM / ODM enquiries', href: '/services/oem-odm/', text: 'Describe your branding or development brief. Logo, packaging and product changes require a model-specific feasibility review.' },
-  { title: 'A quote built around your brief', href: '/inquiry/', text: 'Share your quantity, destination and target date. Pricing, minimum quantities and delivery options are confirmed during quotation.' }
+  { title: 'Wholesale sourcing', href: '/services/wholesale/', text: 'Compare speaker models for your retail, distribution or business gifting range, then prepare the quantities and markets for your quotation.' },
+  { title: 'OEM / ODM projects', href: '/services/oem-odm/', text: 'Discuss logo, packaging and product development requirements for the model or concept you have in mind. Options depend on the project.' },
+  { title: 'A clear sourcing brief', href: '/inquiry/', text: 'Bring model, quantity, destination and branding requirements together so pricing, lead time and order details can be checked.' }
 ];

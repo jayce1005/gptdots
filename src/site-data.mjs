@@ -1,3 +1,4 @@
+import catalogProducts from './catalog-products.json' with { type: 'json' };
 export const site = { name: 'SpeakerB2B', intendedDomain: 'speakerb2b.com', inquiryEnabled: false };
 // Candidate identities remain separate until the original supplier records are checked.
 export const candidates = ['MG II','GB03','GB01','S12','S16','S20','S19','S11'];
@@ -352,3 +353,24 @@ s12.gallery = [
   }
 ];
 s12.image = s12.gallery[0];
+
+// The supplied quotation takes precedence for matching model names.
+for (const entry of catalogProducts) {
+  const index = products.findIndex(product => product.id === entry.id);
+  if (index < 0) products.push(entry);
+  else products[index] = entry;
+}
+
+// Product photos supplied by the user for these exact models.
+products.find(product => product.id === 's19').image = {
+  src: '/images/s19/s19-main.jpg', alt: 'S19 black speaker with illuminated RGB light frame and wrist strap', width: 1500, height: 980
+};
+products.find(product => product.id === 's11').image = {
+  src: '/images/s11/s11-main.jpg', alt: 'S11 black portable speaker with illuminated controls and light ring', width: 1499, height: 1499
+};
+products.find(product => product.id === 's20').image = {
+  src: '/images/s20/s20-main.png', alt: 'S20 black portable speaker with carrying strap on a white background', width: 1522, height: 1426
+};
+products.find(product => product.id === 's16').image = {
+  src: '/images/s16/s16-main.jpg', alt: 'S16 black portable speaker with illuminated controls and display', width: 2755, height: 2755
+};

@@ -1,28 +1,28 @@
 export const servicePages = [
   {
-    path: 'wholesale', title: 'Wholesale & stock enquiries', eyebrow: 'WHOLESALE SOURCING',
-    headline: 'Build your next speaker assortment.',
-    intro: 'Prepare a wholesale brief for your shop, distribution business or business gifting project. Start with the models that fit your plans.',
+    path: 'wholesale', title: 'Wholesale speaker sourcing', eyebrow: 'WHOLESALE SPEAKERS',
+    headline: 'Build a speaker range for your market.',
+    intro: 'Explore Bluetooth speakers for retail, distribution and business gifting. Compare models and prepare the details needed for a quotation.',
     steps: [
-      ['Shortlist your models', 'Choose one or more of the eight model candidates. Photos and technical specifications are still awaiting verification.'],
-      ['Share your order context', 'Include quantities by model, destination market and your preferred arrival date. These are enquiry requirements, not confirmed order terms.'],
-      ['Confirm the supply details', 'Current inventory, minimum quantities, pricing and shipping arrangements must be checked before any order can be agreed.']
+      ['Choose your models', 'Browse silicone, portable and computer speakers. Compare available images and specifications to find a fit for your customers.'],
+      ['Tell us about your order', 'List your preferred models, estimated quantities, destination market and target delivery date.'],
+      ['Confirm your quotation', 'Confirm pricing, availability and the applicable shipping terms for your order.']
     ],
-    noteTitle: 'Stock needs a current check.',
-    note: 'This catalog is not a live inventory feed. A listed model is not a promise of immediate availability. Ask for a current stock check and a reviewed quotation for your exact requirements.',
+    noteTitle: 'Plan with current information.',
+    note: 'Catalog prices are for reference. Confirm current pricing, inventory and delivery arrangements for your selected models.',
     intent: 'wholesale', action: 'Prepare a wholesale brief'
   },
   {
-    path: 'oem-odm', title: 'OEM / ODM enquiries', eyebrow: 'BRANDING & DEVELOPMENT BRIEFS',
-    headline: 'Start with your brand. Define the possibilities.',
-    intro: 'Use an existing speaker model as the starting point for a branding enquiry, or describe a broader product development idea for feasibility review.',
+    path: 'oem-odm', title: 'OEM / ODM speaker projects', eyebrow: 'CUSTOM SPEAKER PROJECTS',
+    headline: 'Make your next speaker range your own.',
+    intro: 'Start with an existing model or describe your product idea. Share your branding and development requirements for a project-specific feasibility review.',
     steps: [
-      ['OEM / branding brief', 'Describe your logo placement, packaging and preferred finish. Available options, artwork requirements and minimum quantities are not yet confirmed.'],
-      ['ODM / development brief', 'Explain the product changes or design goals you have in mind. Development capability, scope, tooling and costs require review; availability is not implied.'],
-      ['Sample and approval requirements', 'Include any sample, artwork approval or documentation requirements. Sample terms, testing and timelines must be agreed before proceeding.']
+      ['Branding and packaging', 'Tell us about your logo, packaging, colours and artwork requirements. Available options depend on the model and order quantity.'],
+      ['Product development', 'Describe the features or design changes you need. Scope, tooling, cost and technical feasibility require review.'],
+      ['Samples and approval', 'Outline sample, testing, compliance and timing requirements so the next steps can be discussed for your market.']
     ],
-    noteTitle: 'Every customization starts with verification.',
-    note: 'No model is currently advertised with confirmed customization capability. Branding methods, materials, technical changes and certification requirements depend on the reviewed project scope.',
+    noteTitle: 'A project built around your requirements.',
+    note: 'Branding methods, minimum quantities, samples and development options are confirmed for each model and project.',
     intent: 'oem-odm', action: 'Prepare an OEM / ODM brief'
   }
 ];

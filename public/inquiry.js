@@ -64,10 +64,44 @@ if (form) {
     exportStatus.textContent = '';
     sync();
     const values = new FormData(form);
-    const text = ['SpeakerB2B enquiry brief — not sent', `Enquiry type: ${form.elements.intent.selectedOptions[0].text}`,  `Product: ${select.selectedOptions[0].text}`, `Product URL: ${values.get('productUrl') || 'General enquiry'}`, `Company: ${values.get('company')}`, `Email: ${values.get('email')}`, `Quantity: ${values.get('quantity') || 'To discuss'}`, `Destination: ${values.get('destination')}`, `Requirements: ${values.get('requirements')}`].join('\n');
+    const text = ['SpeakerB2B enquiry', `Enquiry type: ${form.elements.intent.selectedOptions[0].text}`,  `Product: ${select.selectedOptions[0].text}`, `Product URL: ${values.get('productUrl') || 'General enquiry'}`, `Company: ${values.get('company')}`, `Email: ${values.get('email')}`, `Quantity: ${values.get('quantity') || 'To discuss'}`, `Destination: ${values.get('destination')}`, `Requirements: ${values.get('requirements')}`].join('\n');
     document.querySelector('#brief').value = text;
+    const subject = `SpeakerB2B enquiry: ${select.selectedOptions[0].text}`;
+    document.querySelector('#email-brief').href = `mailto:speakerb2b@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
     document.querySelector('#brief-result').hidden = false;
-    document.querySelector('#form-status').textContent = 'Your brief is ready below. Nothing has been sent. Copy it for your own records.';
+    document.querySelector('#form-status').textContent = 'Your enquiry is ready below. Open your email app and press Send, or copy the brief.';
     document.querySelector('#brief').focus();
   });
+}
+
+const productSearch = document.querySelector('#product-search');
+if (productSearch) {
+  const grid = document.querySelector('.product-grid');
+  const cards = [...grid.querySelectorAll('.product-card[data-product-name]')];
+  const status = document.querySelector('#search-status');
+  const sort = document.querySelector('#product-sort');
+  const originalOrder = new Map(cards.map((card, index) => [card, index]));
+  sort.disabled = false;
+  const updateCatalog = () => {
+    const query = productSearch.value.trim().toLowerCase();
+    let count = 0;
+    for (const card of cards) {
+      card.hidden = !card.dataset.productName.includes(query);
+      if (!card.hidden) count++;
+    }
+    const ordered = [...cards].sort((a, b) => {
+      if (sort.value === 'name') return a.dataset.productName.localeCompare(b.dataset.productName, 'en', { numeric: true });
+      if (sort.value.startsWith('price-')) {
+        const aPrice = a.dataset.price === '' ? null : Number(a.dataset.price);
+        const bPrice = b.dataset.price === '' ? null : Number(b.dataset.price);
+        if (aPrice === null || bPrice === null) return aPrice === bPrice ? originalOrder.get(a) - originalOrder.get(b) : aPrice === null ? 1 : -1;
+        return (aPrice - bPrice) * (sort.value === 'price-asc' ? 1 : -1) || originalOrder.get(a) - originalOrder.get(b);
+      }
+      return originalOrder.get(a) - originalOrder.get(b);
+    });
+    grid.append(...ordered);
+    status.textContent = `${count} ${query ? 'matching ' : ''}model${count === 1 ? '' : 's'}`;
+  };
+  productSearch.addEventListener('input', updateCatalog);
+  sort.addEventListener('change', updateCatalog);
 }

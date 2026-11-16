@@ -3,3 +3,5 @@ review/
 node_modules/
 .env
 .env.*
+
+.wrangler/

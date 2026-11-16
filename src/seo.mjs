@@ -6,13 +6,13 @@ export const previewMode = process.env.SITE_MODE !== 'production';
 const xml = text => String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const routes = {
   '/': ['Wholesale Bluetooth Speakers & Custom Branding', 'Explore SpeakerB2B speaker models for wholesale sourcing and custom branding enquiries. Browse the catalog and prepare a brief for your business.'],
-  '/products/': ['Wholesale Speaker Models', 'Browse eight speaker model candidates, compare styles and prepare a model-specific wholesale or branding enquiry. Product details remain under review.'],
+  '/products/': ['Wholesale Speaker Models', 'Browse speaker models, compare styles and prepare a model-specific wholesale or branding enquiry. Product details remain under review.'],
   '/services/': ['Wholesale Sourcing & Custom Speaker Enquiries', 'Choose a wholesale sourcing or OEM/ODM enquiry path. Understand what to include in your quantity, branding, destination and timing requirements.'],
   '/services/wholesale/': ['Wholesale Speakers & Stock Enquiries', 'Plan a wholesale speaker order: shortlist models, outline quantities and request current stock and quotation details before making a purchase decision.'],
   '/services/oem-odm/': ['OEM / ODM Speaker Project Enquiries', 'Prepare a custom speaker branding or development brief. Outline logo, packaging, design and sample requirements for project-specific feasibility review.'],
   '/about/': ['About SpeakerB2B', 'Learn about SpeakerB2B, a speaker wholesale sourcing and customization enquiry project built around clear product shortlists and business requirements.'],
-  '/contact/': ['Contact SpeakerB2B', 'Prepare a speaker sourcing enquiry for SpeakerB2B. Contact channels are awaiting configuration; the preview brief builder does not send messages.'],
-  '/inquiry/': ['Prepare Your Speaker Sourcing Brief', 'Build a local enquiry brief with your model, order quantity, market and customization requirements. Nothing is sent by this preview form.'],
+  '/contact/': ['Contact SpeakerB2B', 'Contact SpeakerB2B by email for wholesale Bluetooth speaker sourcing and custom branding enquiries.'],
+  '/inquiry/': ['Prepare Your Speaker Sourcing Brief', 'Prepare a speaker sourcing enquiry with your model, quantity, destination and branding requirements, then send it using your email app.'],
   '/404.html': ['Page Not Found', 'This SpeakerB2B page could not be found. Return to the speaker catalog to continue exploring model candidates and sourcing services.']
 };
 export function metadata(path) {
@@ -20,10 +20,8 @@ export function metadata(path) {
   const category = categories.find(c => path === `/products/type/${c.id}/`);
   if (product?.id === 's12') return {title: `S12 Bluetooth 5.4 12W Speaker — Wholesale | ${site.name}`, description: 'S12 Bluetooth 5.4 12W speaker. Up to 12 hours at 30% volume with the lights off; actual playback varies with use. Wholesale Price: USD 7.00 / unit.', label: product.name};
   if (product?.id === 'mg-ii') return {title: `MG II Bluetooth 6.0 24W Speaker — Wholesale | ${site.name}`, description: 'Explore MG II with Bluetooth 6.0, a Single Full-Range Driver, 24W rated output, DSP and three EQ modes. Wholesale Price: USD 21.60 / unit.', label: product.name};
-  if (product?.id === 'gb03') return {title: `GB03 Bluetooth 6.0 Speaker — Wholesale | ${site.name}`, description: 'GB03 Bluetooth 6.0 speaker with DSP and BASS+3.0. Up to 24 hours at 30% volume; actual playback varies with use. Wholesale Price: USD 13.20 / unit.', label: product.name};
-  if (product?.id === 'gb01') return {title: `GB01 Bluetooth 6.0 Speaker — Wholesale | ${site.name}`, description: 'Explore the GB01 Bluetooth 6.0 speaker with a 10W full-range driver, DSP and three lighting modes. Wholesale Price: USD 7.80 / unit.', label: product.name};
-  if (product) return { title: `${product.name} Speaker — Wholesale Enquiries | ${site.name}`, description: `Explore the ${product.name} speaker candidate for your business sourcing shortlist. Prepare a model-specific brief; pricing and specifications require confirmation.`, label:product.name };
-  if (category) return { title:`${category.name} Speakers | ${site.name}`, description:category.description, label:category.name };
+  if (product) return { title: `${product.name} Speaker — Wholesale Enquiries | ${site.name}`, description: `Explore the ${product.name} Bluetooth speaker for wholesale and custom-branding projects. Compare product details and prepare a sourcing brief for your business.`, label:product.name };
+  if (category) return { title:`${category.name} | ${site.name}`, description:category.description, label:category.name };
   const [title,description] = routes[path] || ['Speaker Sourcing', 'Explore the SpeakerB2B model catalog and sourcing enquiry options.'];
   return {title: title.includes(site.name)?title:`${title} | ${site.name}`,description,label:({'/products/':'Products','/services/':'Services','/services/wholesale/':'Wholesale','/services/oem-odm/':'OEM / ODM','/about/':'About Us','/contact/':'Contact','/inquiry/':'Enquiry','/404.html':'Page not found'})[path]||'Home'};
 }
