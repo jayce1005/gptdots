@@ -3,7 +3,7 @@ export const site = { name: 'SpeakerB2B', intendedDomain: 'speakerb2b.com', inqu
 // Candidate identities remain separate until the original supplier records are checked.
 export const candidates = ['MG II','GB03','GB01','S12','S16','S20','S19','S11'];
 export const slug = name => name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
-export const products = candidates.map(name => ({ id: slug(name), name, image: null, status: 'Details under review', description: name === 'Digital-display RGB' ? 'A digital-display RGB speaker candidate for your sourcing shortlist.' : `${name} speaker candidate for wholesale and branding enquiries.` }));
+export const products = candidates.map(name => ({ id: slug(name), name, image: null, status: 'Details under review', description: name === 'Digital-display RGB' ? 'A digital-display RGB speaker candidate for your sourcing shortlist.' : `${name} speaker for wholesale and branding enquiries.` }));
 
 // Populate only after the supplied GB01 images have been visually reviewed.
 const gb01 = products.find(product => product.id === "gb01");

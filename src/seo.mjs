@@ -2,15 +2,15 @@ import { products, site } from './site-data.mjs';
 import { categories } from './categories.mjs';
 
 export const origin = `https://${site.intendedDomain}`;
-export const previewMode = process.env.SITE_MODE !== 'production';
+export const previewMode = process.env.SITE_MODE === 'preview';
 const xml = text => String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const routes = {
   '/': ['Wholesale Bluetooth Speakers & Custom Branding', 'Explore SpeakerB2B speaker models for wholesale sourcing and custom branding enquiries. Browse the catalog and prepare a brief for your business.'],
-  '/products/': ['Wholesale Speaker Models', 'Browse speaker models, compare styles and prepare a model-specific wholesale or branding enquiry. Product details remain under review.'],
+  '/products/': ['Wholesale Speaker Models', 'Browse speaker models, compare styles and prepare a model-specific wholesale or branding enquiry. Request current pricing and confirmed specifications.'],
   '/services/': ['Wholesale Sourcing & Custom Speaker Enquiries', 'Choose a wholesale sourcing or OEM/ODM enquiry path. Understand what to include in your quantity, branding, destination and timing requirements.'],
   '/services/wholesale/': ['Wholesale Speakers & Stock Enquiries', 'Plan a wholesale speaker order: shortlist models, outline quantities and request current stock and quotation details before making a purchase decision.'],
   '/services/oem-odm/': ['OEM / ODM Speaker Project Enquiries', 'Prepare a custom speaker branding or development brief. Outline logo, packaging, design and sample requirements for project-specific feasibility review.'],
-  '/about/': ['About SpeakerB2B', 'Learn about SpeakerB2B, a speaker wholesale sourcing and customization enquiry project built around clear product shortlists and business requirements.'],
+  '/about/': ['About SpeakerB2B', 'Learn about SpeakerB2B, Bluetooth speaker wholesale sourcing and custom branding services for retailers, distributors and business buyers.'],
   '/contact/': ['Contact SpeakerB2B', 'Contact SpeakerB2B by email for wholesale Bluetooth speaker sourcing and custom branding enquiries.'],
   '/inquiry/': ['Prepare Your Speaker Sourcing Brief', 'Prepare a speaker sourcing enquiry with your model, quantity, destination and branding requirements, then send it using your email app.'],
   '/404.html': ['Page Not Found', 'This SpeakerB2B page could not be found. Return to the speaker catalog to continue exploring model candidates and sourcing services.']
