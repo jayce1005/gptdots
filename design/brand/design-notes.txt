@@ -1,0 +1,8 @@
+BA identity for SpeakerB2B
+Created using the built-in image generation tool.
+
+Logo prompt: A bold uppercase BA monogram in blue #0065CB, with a subtle audio rhythm in the negative space, flat geometric lettering on a transparent background. Single mark only; no extra words, mockup or shadow.
+
+Favicon prompt: Preserve the BA identity in white on a blue square, simplify for small-size legibility, no extra text or effects.
+
+Master images are preserved in this folder. Website PNG sizes and ICO were exported mechanically from the generated images.
